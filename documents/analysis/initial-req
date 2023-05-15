@@ -1,4 +1,4 @@
-As an admin i should be able to:
+Admin :
 - product creation
 - update products
 -delete products
@@ -8,7 +8,7 @@ As an admin i should be able to:
  -view all orders
  -view order by id
 
- As an user i should be able to:
+User:
  -view all products
  -view by category
  -add item to cart
