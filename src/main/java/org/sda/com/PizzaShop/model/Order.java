@@ -3,12 +3,12 @@ package org.sda.com.pizzashop.model;
 import org.sda.com.pizzashop.model.enums.OrderStatus;
 import org.sda.com.pizzashop.model.enums.PaymentMethod;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "order")
+@Table(name = "client_order")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

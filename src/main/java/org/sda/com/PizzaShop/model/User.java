@@ -2,7 +2,7 @@ package org.sda.com.pizzashop.model;
 
 import org.sda.com.pizzashop.model.enums.UserRole;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "user")

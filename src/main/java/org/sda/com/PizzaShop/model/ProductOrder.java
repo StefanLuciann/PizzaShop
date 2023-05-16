@@ -1,6 +1,6 @@
 package org.sda.com.pizzashop.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "product_order")

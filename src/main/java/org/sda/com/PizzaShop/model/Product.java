@@ -2,7 +2,7 @@ package org.sda.com.pizzashop.model;
 
 import org.sda.com.pizzashop.model.enums.ProductCategory;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "product")
