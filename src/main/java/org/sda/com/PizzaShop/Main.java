@@ -1,4 +1,4 @@
-package org.sda.com.PizzaShop;
+package org.sda.com.pizzashop;
 
 public class Main {
     public static void main(String[] args) {
