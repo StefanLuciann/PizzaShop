@@ -1,9 +1,5 @@
 package org.sda.com.pizzashop.model;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import org.sda.com.pizzashop.model.enums.UserRole;
 
 import jakarta.persistence.*;
@@ -15,21 +11,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    @NotNull
-    @NotBlank
-    @Size(min = 2)
+
     @Column(name = "name")
     private String name;
-    @NotNull
-    @NotBlank
-    @Email
     @Column(name = "email")
     private String email;
-    @NotNull
-    @NotBlank
     @Column(name = "password")
     private String password;
-    @NotNull
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
