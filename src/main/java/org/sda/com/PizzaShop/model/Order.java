@@ -26,6 +26,9 @@ public class Order {
     @Column(name = "payment_method")
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
+    @ManyToOne
+    @JoinColumn(name = "user_profile")
+    private UserProfile userProfile;
     @OneToMany(mappedBy = "order")
     private List<ProductOrder> productOrder;
     public Order() {
@@ -37,6 +40,22 @@ public class Order {
         this.status = status;
         this.totalAmount = totalAmount;
         this.paymentMethod = paymentMethod;
+    }
+
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
+
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
+    }
+
+    public List<ProductOrder> getProductOrder() {
+        return productOrder;
+    }
+
+    public void setProductOrder(List<ProductOrder> productOrder) {
+        this.productOrder = productOrder;
     }
 
     public Integer getId() {

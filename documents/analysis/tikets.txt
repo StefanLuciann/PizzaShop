@@ -1,18 +1,18 @@
-PS-1 Create database design
+DONE PS-1 Create database design
 PS-2 Create system architecture design
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-PS-3 Create a SpringBoot template project with all dependencies
-PS-4 Configgure database connection and database schema.
-PS-5 Create hibernate model
+DONE PS-3 Create a SpringBoot template project with all dependencies
+DONE PS-4 Configgure database connection and database schema.
+DONE PS-5 Create hibernate model
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-PS-6 Create dummy index page
-PS-7 Configgure spring security
+DONE PS-6  Create dummy index page
+DONE PS-7 Configgure spring security
 
-PS-8  ADD LOG IN/LOG OUT
+DONE PS-8  ADD LOG IN/LOG OUT
 
-PS-9  ADD CLIENT REGISTER PAGE(public)
-PS-10  ADD ADMIN REGISTER PAGE(private, only for admin role)
+DONE PS-9  ADD CLIENT REGISTER PAGE(public)
+DONE PS-10  ADD ADMIN REGISTER PAGE(private, only for admin role)
 
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
