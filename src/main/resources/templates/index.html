@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head th:replace="fragments/header :: header-css"></head>
+
+<body>
+<div th:replace="fragments/header :: header"></div>
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div th:if="${param.productAddedToCart}">
+            <div class="alert alert-info">
+                Product added to cart!
+            </div>
+        </div>
+        <div th:if="${!products.isEmpty()}"
+             class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+
+            <div th:each="product : ${products}" class="col mb-5">
+                <div class="card h-100">
+                    <!-- Sale badge-->
+                    <div th:if="${product.getPromoPrice()!=null}" class="badge bg-dark text-white position-absolute"
+                         style="top: 0.5rem; right: 0.5rem">Promo
+                    </div>
+                    <!-- Product image-->
+                    <img class="card-img-top" th:src="${product.getMainImageUrl()}" alt="..."/>
+                    <!-- Product details-->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <!-- Product name-->
+                            <h5 class="fw-bolder" th:text="${product.getName()}"></h5>
+                            <!-- Product with promo price-->
+                            <div th:if="${product.getPromoPrice()!=null}">
+                                <span class="text-muted text-decoration-line-through"
+                                      th:text="${product.getPrice() + ' lei'}"></span>
+                                <span th:text="${product.getPromoPrice()+ ' lei'}"></span>
+                            </div>
+                            <!-- Product without promo price-->
+                            <div th:if="${product.getPromoPrice()==null}">
+                                <span th:text="${product.getPrice()+ ' lei'}"></span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- Product actions-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center">
+                            <a class="btn btn-outline-dark mt-auto"
+                                                    th:href="${'/shopping-cart-add/'+product.getId()+'?origin=home'}">Add to cart</a>
+                        </div>
+                        <div class="text-center" sec:authorize="hasAuthority('ADMIN')" ><a class="far fa-edit"
+                                                    th:href="${'/update-product/'+product.getId()+'?origin=home'}"></a>
+                        </div>
+                        <div class="text-center" sec:authorize="hasAuthority('ADMIN')" ><a class="fas fa-trash"
+                                                                                           th:href="${'/delete-product/'+product.getId()+'?origin=home'}"></a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div th:if="${products.isEmpty()}"
+             class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            <span>No products yet!</span>
+        </div>
+
+    </div>
+</section>
+
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+
+</html>

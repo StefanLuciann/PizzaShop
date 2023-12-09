@@ -1,0 +1,37 @@
+<!doctype HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+</head>
+<style>
+    .footer{
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+    }
+</style>
+
+
+<body>
+<div class="footer">
+
+<div th:fragment="footer">
+    <div class="container">
+        <footer>
+            <span>copyright</span>
+            <span>
+                    <a th:href="@{/about}">About</a>
+                </span>
+        </footer>
+    </div>
+    <script type="text/javascript" th:src="@{webjars/jquery/3.3.1-1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{webjars/bootstrap/4.1.0/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/lang.js}"></script>
+</div>
+</div>
+</body>
+
+
+</html>

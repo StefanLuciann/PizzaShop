@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head th:replace="fragments/header :: header-css"></head>
+
+<body>
+<div th:replace="fragments/header :: header"></div>
+<section class="h-100">
+    <div class="container py-5">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Order Number</th>
+                <th scope="col">Date of Order</th>
+                <th scope="col">Status</th>
+                <th scope="col">Total Amount</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order: ${orders}">
+                <th th:text="${order.getOrderNumber()}"></th>
+                <td th:text="${order.getDateOfOrder()}"></td>
+                <td th:text="${order.getStatus()}"></td>
+                <td th:text="${order.getTotalAmount()}"></td>
+                <td>
+                    <div sec:authorize="hasAuthority('ADMIN')">
+                        <a th:href="'/admin-order-delete/' + ${order.getId()}">Delete</a>
+                    </div>
+                    <div sec:authorize="hasAuthority('ADMIN')">
+                        <a th:href="'/admin-order-view/' + ${order.getId()}">View</a>
+                    </div>
+                    <div sec:authorize="hasAuthority('ADMIN')">
+                        <a th:href="'/admin-order-update/' + ${order.getId()}">Update</a>
+                    </div>
+                    <div sec:authorize="hasAuthority('CLIENT')">
+                        <a th:href="'/client-order-view/' + ${order.getId()}">View</a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+
+</html>

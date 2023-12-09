@@ -1,0 +1,90 @@
+DONE PS-1 Create database design
+PS-2 Create system architecture design
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+DONE PS-3 Create a SpringBoot template project with all dependencies
+DONE PS-4 Configgure database connection and database schema.
+DONE PS-5 Create hibernate model
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+DONE PS-6  Create dummy index page
+DONE PS-7 Configgure spring security
+
+DONE PS-8  ADD LOG IN/LOG OUT
+
+DONE PS-9  ADD CLIENT REGISTER PAGE(public)
+DONE PS-10  ADD ADMIN REGISTER PAGE(private, only for admin role)
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+PS-11        IMPLEMENT ITEMS CREATION
+    As a administrator I should be able to add a new items with the following details: name,category, description. If the creation process is successful
+   the system will allocate a unique id to the new item.
+       The system will validate the following data:
+               - name to be not blank and not empty
+               - category name to be not blank and not empty
+               - description to be not blank and not empty
+   If the creation process fails the system will show an appropriate error message.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+PS-12       IMPLEMENT VIEW ALL ITEMS
+   As a administrator I should be able to view all the existing items from the system.
+           I should be able to view a list where each line will contain: id, name,category.
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+PS-13       IMPLEMENT VIEW ITEMS by ID
+              As a administrator I should be able to view existing items  by id from the system.
+               I should be able to view a list where each line will contain: id, name,category,description.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+PS-14       IMPLEMENT UPDATE ITEMS
+   As a administrator I should be able to update the details of an existing item.
+   If the item is found by id in the system, I should be able to update the following data:
+               - name
+               - category
+               - description
+   The system will validate the following data:
+               - name to be not blank and not empty
+               - category to be not blank and not empty
+               - description to be not blank and not empty
+       If the update process fails the system will show an appropriate error message.
+   If the item is not found by id in the system an appropriate error message will be shown.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+PS-15       IMPLEMENT DELETE ITEM
+   As a administrator I should be able to delete and existing item by id from the system.
+   If the given id is found in the system the vet will be deleted and a message
+   will be shown on the screen.
+   If the given id is not found in the system an appropriate error message will be shown on the screen.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+PS-16       IMPLEMENT VIEW ALL ORDERS
+   As a administrator I should be able to view all the existing orders from the system.
+           I should be able to view a list where each line will contain: id, name,address,items,status,payment-method.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+PS-17       IMPLEMENT Update ORDERS
+   As a administrator I should be able to update existing orders from the system.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+PS-13        IMPLEMENT VIEW Item BY Category
+   As a user I should be able to view all the items by category.
+I should be able to view all items from the selected category.
+. If the given category is not found in the system an appropriate error message
+   will be shown on the screen.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+PS-19    IMPLEMENT ADD TO Cart
+   As a user I should be able to add an existing items into the cart.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+PS-19    IMPLEMENT VIEW Cart
+   As a userI should be able to view all the existing items from the cart.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+PS-20   - IMPLEMENT UPDATE Cart
+As a user I should be able to update my order before paying the CART.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+PS-21   - IMPLEMENT DELETE Item from Cart
+As a user I should be able to delete my items from the Cart.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+PS-22 IMPLEMENT CREATE YOUR OWN PIZZA .
+As a user I should be able to create my own pizza, by selecting :
+-the type of crust
+-sauce
+-topping
+After finishing to create the pizza , I should be able to press a buton and add it in the cart.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+PS-23 IMPLEMENT UPDATE “YOUR OWN PIZZA” .
+As a user I should be able to update the pizza that I make by using the “Make your own pizza”.

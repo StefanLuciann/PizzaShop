@@ -1,0 +1,15 @@
+Admin :
+- product creation
+- update products
+-delete products
+-view all products
+-- update orders
+ -delete orders
+ -view all orders
+ -view order by id
+
+User:
+ -view all products
+ -view by category
+ -add item to cart
+ -delete item from cart

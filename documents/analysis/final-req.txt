@@ -1,0 +1,91 @@
+PIZZA SHOP PROJECT
+
+
+1   IMPLEMENT REGISTER
+AS a user/administrator I should be able to register into the system with the following details:
+-first name, last name , email,role ,password.
+If the creation process is successful The system will validate the following data:
+
+- fist name to be not blank and not empty
+               - firs name to be not blank and not empty
+               - last name to be not blank and not empty
+               - email to be not blank and not empty
+		- role to be not blank and not empty
+		- password to be not blank and not empty
+If the creation process fails the system will show an appropriate error message.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2   - IMPLEMENT LOG IN/LOG OUT
+As a user/administrator I should be able to log in/log out/ in to my account using my email and password.
+If the creation process fails the system will show an appropriate error message.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+3   - IMPLEMENT ITEMS CREATION
+    As a administrator I should be able to add a new items with the following details: name,category, description, topping. If the creation process is successful
+   the system will allocate a unique id to the new item.
+       The system will validate the following data:
+               - name to be not blank and not empty
+               - category name to be not blank and not empty
+               - description to be not blank and not empty
+               - extra-topping(when we can) to be not blank and not empty
+   If the creation process fails the system will show an appropriate error message.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+PCM-4   - IMPLEMENT VIEW ALL ITEMS
+   As a administrator I should be able to view all the existing items from the system.
+           I should be able to view a list where each line will contain: id, name,category.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+PCM-5   - IMPLEMENT VIEW Item BY Category
+   As a user I should be able to view all the items by category.
+I should be able to view all items from the selected category.
+. If the given category is not found in the system an appropriate error message
+   will be shown on the screen.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+PCM-6   - IMPLEMENT UPDATE ITEMS
+   As a user I should be able to update the details of an existing vet.
+   If the item is found by id in the system, I should be able to update the following data:
+               - name
+               - category
+               - description
+           	 - extra-topping
+
+   The system will validate the following data:
+               - name to be not blank and not empty
+               - category to be not blank and not empty
+               - description to be not blank and not empty
+		- extra-topping to be not blank and not empty
+       If the update process fails the system will show an appropriate error message.
+   If the item is not found by id in the system an appropriate error message will be shown.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+PCM-7   - IMPLEMENT DELETE ITEM
+   As a user I should be able to delete and existing item by id from the system.
+   If the given id is found in the system the vet will be deleted and a message
+   will be shown on the screen.
+   If the given id is not found in the system an appropriate error message will be shown on the screen.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+PCM-8   - IMPLEMENT VIEW ALL ORDERS
+   As a administrator I should be able to view all the existing orders from the system.
+           I should be able to view a list where each line will contain: id, name,address,items,status,payment-method.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+PCM-9 IMPLEMENT CREATE ORDER
+As a user I should be able to create an order with the following details:
+Fist name, last name, address.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+PCM-10   - IMPLEMENT VIEW ORDER
+   As a userI should be able to view all the existing items from the order.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+PCM-11   - IMPLEMENT UPDATE ORDER
+As a user I should be able to update my order before paying the order.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+PCM-12   - IMPLEMENT DELETE ORDER
+As a user I should be able to delete my items from the ORDER.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+PCM-13 IMPLEMENT CREATE YOUR OWN PIZZA .
+As a user I should be able to create my own pizza, by selecting :
+-the type of crust
+-the sauce
+-topping
+After finishing to create the pizza , I should be able to press a buton and add it in the cart.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+PCM-14 IMPLEMENT UPDATE “YOUR OWN PIZZA” .
+As a user I should be able to update the pizza that I make by using the “Make your own pizza”.
