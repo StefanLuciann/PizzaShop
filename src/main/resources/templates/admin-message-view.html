@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header-css"></head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<main role="main" class="container my-5">
+    <h2 class="mb-4">Message Details</h2>
+
+    <div class="card">
+        <div class="card-body">
+            <p><strong>ID:</strong> <span th:text="${message.id}"></span></p>
+            <p><strong>Name:</strong> <span th:text="${message.name}"></span></p>
+            <p><strong>Email:</strong> <span th:text="${message.email}"></span></p>
+            <p><strong>Phone:</strong> <span th:text="${message.phone}"></span></p>
+            <p><strong>Message:</strong></p>
+            <p th:text="${message.message}"></p>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <a class="btn btn-secondary" th:href="@{/admin/messages}">Back</a>
+        <a class="btn btn-danger" th:href="@{'/admin/messages/delete/' + ${message.id}}">Delete</a>
+    </div>
+</main>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

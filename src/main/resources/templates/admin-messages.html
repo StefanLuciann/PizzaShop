@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header-css"></head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<main class="container my-5">
+    <h1 class="text-center mb-4">📩 All Messages</h1>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Message</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="msg : ${messages}">
+            <td th:text="${msg.id}"></td>
+            <td th:text="${msg.name}"></td>
+            <td th:text="${msg.email}"></td>
+            <td th:text="${msg.phone}"></td>
+            <td th:text="${#strings.abbreviate(msg.message,30)}"></td>
+            <td>
+                <a th:href="@{'/admin/messages/' + ${msg.id}}" class="btn btn-sm btn-outline-info">View</a>
+                <a th:href="@{'/admin/messages/delete/' + ${msg.id}}" class="btn btn-sm btn-outline-danger"
+                   onclick="return confirm('Are you sure?')">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

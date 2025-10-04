@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/header :: header-css"></head>
+
+<body>
+<div th:replace="fragments/header :: header"></div>
+<main role="main">
+
+    <div class="container my-5">
+        <h1 class="text-center mb-4">Contact Us</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <h4>📍 Address</h4>
+                <p> Str. Unirii 45, Craiova, România </p>
+
+                <h4>📞 Phone</h4>
+                <p><a href="tel:+40 741 123 456">+40 741 123 456</a></p>
+
+                <h4>📧 Email</h4>
+                <p><a href="mailto:contact@pizzashop.com">contact@pizzashop.com</a></p>
+
+                <h4>🕑 Working Hours</h4>
+                <p>Monday - Sunday: 10:00 AM - 11:00 PM</p>
+            </div>
+
+            <div class="col-md-6">
+                <h4>Send us a message</h4>
+                <form method="post" th:action="@{/send-message}">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone number</label>
+                        <input type="tel"
+                               class="form-control"
+                               id="phone"
+                               name="phone"
+                               placeholder="07XXXXXXXX"
+                               required
+                               pattern="[0-9]{10}"
+                               title="Phone number must have exactly 10 digits (only numbers)">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea class="form-control" id="message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-dark">Send</button>
+                </form>
+
+
+                <div class="alert alert-success mt-3"
+                     th:if="${successMessage}"
+                     th:text="${successMessage}">
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <h4 class="text-center">📌 Find us on the map</h4>
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2849.415197355996!2d23.7948809766792!3d44.33017801086851!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x474d3f83d92e8cf7%3A0x2a6d2f2cda0a07bb!2sUniversitatea%20din%20Craiova!5e0!3m2!1sro!2sro!4v1691234567890!5m2!1sro!2sro"
+                        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy">
+                </iframe>
+            </div>
+        </div>
+    </div>
+
+</main>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

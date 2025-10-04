@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/header :: header-css"></head>
+
+<body>
+<div th:replace="fragments/header :: header"></div>
+<main role="main">
+
+
+  <div class="container my-5">
+    <h1 class="text-center mb-4">It's-a-me Mario!</h1>
+    <div class="row">
+      <div class="col-md-6">
+        <p class="lead">
+          At <strong>It's-a-me Mario </strong>, we believe that pizza is more than just food – it’s an experience.
+          Founded in 2020, our mission has always been to bring joy to our customers through authentic pizza,
+          crafted with the finest ingredients and a true passion for flavor.
+        </p>
+        <p>
+          We use only fresh ingredients, homemade dough, and traditional recipes for our sauces.
+          Our chefs put their heart into every pizza – whether it’s a classic Margherita or a fully customized creation.
+        </p>
+        <p>
+          Over the years, we’ve served thousands of happy customers and we are proud to be known as
+          “the best pizzeria in town.”
+        </p>
+      </div>
+      <div class="col-md-6">
+        <img src="https://www.pockettactics.com/wp-content/sites/pockettactics/2023/01/mario-pizza.jpg"
+             class="img-fluid rounded shadow"
+             alt="Pizza about image">
+      </div>
+
+    </div>
+
+    <div class="mt-5 text-center">
+      <h3>Our Mission</h3>
+      <p>
+        To bring the authentic taste of Italian pizza to every neighborhood, offering speed, quality,
+        and a memorable dining experience.
+      </p>
+    </div>
+  </div>
+
+
+
+</main>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
