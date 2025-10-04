@@ -19,11 +19,15 @@ public class MailServiceImpl implements MailService{
     @Override
     public void sendEmail(String from, String to, String subject, String content) throws MessagingException {
         Properties properties = new Properties();
-        properties.put("mail.smtp.auth", mailProperties.isAuth());
-        properties.put("mail.smtp.starttls.enable", mailProperties.isStarttls());
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.starttls.required", "true");
         properties.put("mail.smtp.host", mailProperties.getHost());
         properties.put("mail.smtp.port", mailProperties.getPort());
         properties.put("mail.smtp.ssl.trust", mailProperties.getTrust());
+        properties.put("mail.smtp.ssl.protocols", "TLSv1.2");
+
+
 
         Session session = Session.getInstance(properties, new Authenticator()
         {

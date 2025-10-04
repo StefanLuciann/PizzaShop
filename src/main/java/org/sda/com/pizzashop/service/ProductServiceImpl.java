@@ -18,9 +18,8 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public List<Product> getAllProducts() {
-        return productRepository.findAll();
+        return productRepository.findAllByIsCustomFalse();
     }
-
     @Override
     public void create(Product product) {
         productRepository.save(product);
@@ -51,5 +50,14 @@ public class ProductServiceImpl implements ProductService{
         return productRepository.findById(id);
     }
 
+    @Override
+    public List<Product> searchProducts(String query) {
+        return productRepository.findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(query, query);
+    }
+
+    @Override
+    public Product save(Product product) {
+        return productRepository.save(product);
+    }
 
 }

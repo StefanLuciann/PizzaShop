@@ -1,9 +1,7 @@
 package org.sda.com.pizzashop.model;
 
 import org.sda.com.pizzashop.model.enums.ProductCategory;
-
 import jakarta.persistence.*;
-
 import java.util.Objects;
 
 @Entity
@@ -13,21 +11,28 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "category")
     @Enumerated(EnumType.STRING)
     private ProductCategory category;
+
     @Column(name = "description")
     private String description;
+
     @Column(name = "price")
     private Double price;
+
     @Column(name = "promo_price")
     private Double promoPrice;
+
     @Column(name = "main_image_url")
     private String mainImageUrl;
 
-
+    @Column(name = "is_custom", nullable = false)
+    private boolean isCustom = false;
 
     public Product() {
     }
@@ -95,6 +100,14 @@ public class Product {
 
     public void setMainImageUrl(String mainImageUrl) {
         this.mainImageUrl = mainImageUrl;
+    }
+
+    public boolean isCustom() {
+        return isCustom;
+    }
+
+    public void setCustom(boolean custom) {
+        isCustom = custom;
     }
 
     @Override

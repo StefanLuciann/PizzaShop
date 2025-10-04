@@ -1,29 +1,18 @@
 package org.sda.com.pizzashop.config;
 
-
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-
-
-@ConfigurationProperties(prefix = "sda.mail")
 @Configuration
-@EnableConfigurationProperties
+@ConfigurationProperties(prefix = "sda.mail")
 public class MailProperties {
 
     private String username;
-
     private String password;
-
     private boolean auth;
-
     private boolean starttls;
-
     private String host;
-
     private int port;
-
     private String trust;
 
     public String getUsername() {

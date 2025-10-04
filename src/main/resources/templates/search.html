@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head th:replace="fragments/header :: header-css"></head>
+
+<body>
+<div th:replace="fragments/header :: header"></div>
+<main role="main">
+    <section class="py-5">
+        <div class="container px-4 px-lg-5">
+            <h2 class="mb-4">Search results</h2>
+            <div th:if="${#lists.isEmpty(products)}">
+                <p th:if="${query != null and !#strings.isEmpty(query)}">No results for "<span th:text="${query}"></span>"</p>
+                <p th:if="${query == null or #strings.isEmpty(query)}">Type something to search.</p>
+            </div>
+            <div th:if="${!#lists.isEmpty(products)}"
+                 class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4">
+                <div class="col mb-5" th:each="product : ${products}">
+                    <div class="card h-100">
+                        <div th:if="${product.promoPrice != null}" class="badge bg-dark text-white position-absolute"
+                             style="top: 0.5rem; right: 0.5rem">Promo</div>
+                        <img class="card-img-top" th:src="${product.mainImageUrl}" alt="..."/>
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <h5 class="fw-bolder" th:text="${product.name}"></h5>
+                                <div th:if="${product.promoPrice != null}">
+                                    <span class="text-muted text-decoration-line-through" th:text="${product.price} + ' lei'"></span>
+                                    <span th:text="${product.promoPrice} + ' lei'"></span>
+                                </div>
+                                <div th:if="${product.promoPrice == null}">
+                                    <span th:text="${product.price} + ' lei'"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center">
+                                <a class="btn btn-outline-dark mt-auto"
+                                   th:href="${'/shopping-cart-add/' + product.id + '?origin=search'}">Add to cart</a>
+                            </div>
+                            <div class="text-center" sec:authorize="hasAuthority('ADMIN')">
+                                <a class="far fa-edit" th:href="${'/update-product/' + product.id + '?origin=search'}"></a>
+                            </div>
+                            <div class="text-center" sec:authorize="hasAuthority('ADMIN')">
+                                <a class="fas fa-trash" th:href="${'/delete-product/' + product.id + '?origin=search'}"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</main>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

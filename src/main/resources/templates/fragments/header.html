@@ -1,11 +1,12 @@
 <!DOCTYPE HTML>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head th:fragment="header-css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.1.0/css/bootstrap.min.css/}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.1.0/css/bootstrap.min.css}"/>
     <link rel="stylesheet" type="text/css"
           th:href="@{/webjars/font-awesome/5.0.10/web-fonts-with-css/css/fontawesome-all.min.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
@@ -13,58 +14,96 @@
 </head>
 
 <body>
-    <div th:fragment="header">
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-            <a class="navbar-brand" href="/home"><img th:src="@{/images/logo.png}" id="home"></a>
-            <div class="collapse navbar-collapse w-100 order-1 order-md-0 dual-collapse2" id="navbarNavAltMarkup">
-                <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-                    <form class="form-inline ml-5 my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" title="search-product">
-                        <button type="submit" class="btn my-2 my-sm-0 btn-outline-light">Search</button>
-                    </form>
-                    <ul  class="navbar-nav ml-auto">
-                        <li class="nav-item" sec:authorize="hasAuthority('CLIENT')">
-                            <a class="nav-link" th:href="@{/my-orders}"><button type="submit" class="btn my-2 my-sm-0 btn-outline-light">My Orders</button></a>
-                        </li>
-                        <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
-                            <a class="nav-link" th:href="@{/all-orders}"><button type="submit" class="btn my-2 my-sm-0 btn-outline-light">All Orders</button></a>
-                        </li>
-                        <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
-                            <a class="nav-link" th:href="@{/admin-register}"><button type="submit" class="btn my-2 my-sm-0 btn-outline-light">Create New Admin</button></a>
-                        </li>
-                        <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
-                            <a class="nav-link" th:href="@{/add-product}"><button type="submit" class="btn my-2 my-sm-0 btn-outline-light">Add new product</button></a>
-                        </li>
-                        <li class="nav-item" sec:authorize="isAuthenticated()">
-                            <a class="nav-link" th:href="@{/logout}"><button type="submit" class="btn my-2 my-sm-0 btn-outline-light">Logout</button></a>
-                        </li>
-                        <li class="nav-item" sec:authorize="!isAuthenticated()">
-                            <a class="nav-link" th:href="@{/login}"><button type="submit" class="btn my-2 my-sm-0 btn-outline-light">Login</button></a>
-                        </li>
-                        <li class="nav-item"sec:authorize="!isAuthenticated()">
-                            <a class="nav-link" th:href="@{/client-register}"><button type="submit" class="btn my-2 my-sm-0 btn-outline-light">Register</button></a>
-                        </li>
-                        <li class="nav-item" sec:authorize="isAuthenticated()">
-                            <a class="nav-link" th:href="@{/profile}" th:text="${#authentication.principal.username}"></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/shopping-cart}"><img th:src="@{/images/cart.png}" id="cart"></a>
-                        </li>
+<div th:fragment="header">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a class="navbar-brand d-flex align-items-center" th:href="@{/home}">
+            <img th:src="@{/images/logo.png}" id="home" alt="PizzaShop" style="height:40px">
+        </a>
 
-                    </ul>
-                </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain"
+                aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse w-100" id="navbarMain">
+
+
+            <form class="form-inline my-2 my-lg-0 ml-md-3" th:action="@{/search}" method="get">
+                <input class="form-control mr-sm-2"
+                       type="search"
+                       name="q"
+                       placeholder="Search products…"
+                       aria-label="Search"
+                       th:value="${param.q}">
+                <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+            </form>
+
+
+            <ul class="navbar-nav ml-auto align-items-center">
+
+
+                <li class="nav-item">
+                    <a class="btn btn-outline-light mx-1" th:href="@{/about}">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-outline-light mx-1" th:href="@{/contact}">Contact Us</a>
+                </li>
+
+
+                <li class="nav-item" sec:authorize="hasAuthority('CLIENT')">
+                    <a class="btn btn-outline-light mx-1" th:href="@{/my-orders}">My Orders</a>
+                </li>
+                <li class="nav-item" sec:authorize="hasAuthority('CLIENT')">
+                    <a class="btn btn-outline-light mx-1" th:href="@{/create-pizza}">Create Pizza</a>
+                </li>
+
+
+                <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
+                    <a class="btn btn-outline-light mx-1" th:href="@{/all-orders}">All Orders</a>
+                </li>
+                <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
+                    <a class="btn btn-outline-light mx-1" th:href="@{/admin-register}">Create Admin</a>
+                </li>
+                <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
+                    <a class="btn btn-outline-light mx-1" th:href="@{/add-product}">Add Product</a>
+                </li>
+                <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
+                    <a class="btn btn-outline-light mx-1" th:href="@{/admin/messages}">View Messages</a>
+                </li>
+
+                <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                    <a class="btn btn-outline-light mx-1" th:href="@{/profile}" th:text="${#authentication.name}"></a>
+                </li>
+
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="btn btn-outline-light mx-1" th:href="@{/logout}">Logout</a>
+                </li>
+                <li class="nav-item" sec:authorize="!isAuthenticated()">
+                    <a class="btn btn-outline-light mx-1" th:href="@{/login}">Login</a>
+                </li>
+                <li class="nav-item" sec:authorize="!isAuthenticated()">
+                    <a class="btn btn-outline-light mx-1" th:href="@{/client-register}">Register</a>
+                </li>
+
+
+                <li class="nav-item ml-2">
+                    <a class="nav-link" th:href="@{/shopping-cart}" title="Shopping cart">
+                        <img th:src="@{/images/cart.png}" id="cart" alt="Cart" style="height:26px">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero-header py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">It's-a-me Mario!</h1>
+                <p class="lead fw-normal text-white-50 mb-0">Best pizza in town!</p>
             </div>
-        </nav>
-        <header class="bg-secondary py-5">
-            <div class="container px-4 px-lg-5 my-5">
-                <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">It's me. Mario!</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">Best pizza in town!</p>
-                </div>
-            </div>
-        </header>
-    </div>
+        </div>
+    </header>
+
+</div>
 </body>
-
-
 </html>

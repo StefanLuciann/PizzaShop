@@ -1,9 +1,11 @@
 package org.sda.com.pizzashop.model;
 
+import jakarta.persistence.*;
+import org.sda.com.pizzashop.model.ProductOrder;
+import org.sda.com.pizzashop.model.UserProfile;
 import org.sda.com.pizzashop.model.enums.OrderStatus;
 import org.sda.com.pizzashop.model.enums.PaymentMethod;
 
-import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
 
@@ -14,48 +16,53 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
+
     @Column(name = "order_number")
     private String orderNumber;
-    @Column(name = "date_of_oder")
+
+    @Column(name = "date_of_order")
     private Date dateOfOrder;
+
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
+
     @Column(name = "total_amount")
     private Double totalAmount;
+
     @Column(name = "payment_method")
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
+
     @ManyToOne
     @JoinColumn(name = "user_profile")
     private UserProfile userProfile;
+
     @OneToMany(mappedBy = "order")
     private List<ProductOrder> productOrders;
-    public Order() {
-    }
 
-    public Order(String orderNumber, Date dateOfOrder, OrderStatus status, Double totalAmount, PaymentMethod paymentMethod) {
+    @Column(name = "customer_name", nullable = false)
+    private String customerName;
+
+    @Column(name = "customer_address", nullable = false)
+    private String customerAddress;
+
+    @Column(name = "customer_phone", nullable = false)
+    private String customerPhone;
+
+    public Order() {}
+
+    public Order(String orderNumber, Date dateOfOrder, OrderStatus status,
+                 Double totalAmount, PaymentMethod paymentMethod,
+                 String customerName, String customerAddress, String customerPhone) {
         this.orderNumber = orderNumber;
         this.dateOfOrder = dateOfOrder;
         this.status = status;
         this.totalAmount = totalAmount;
         this.paymentMethod = paymentMethod;
-    }
-
-    public UserProfile getUserProfile() {
-        return userProfile;
-    }
-
-    public void setUserProfile(UserProfile userProfile) {
-        this.userProfile = userProfile;
-    }
-
-    public List<ProductOrder> getProductOrders() {
-        return productOrders;
-    }
-
-    public void setProductOrders(List<ProductOrder> productOrder) {
-        this.productOrders = productOrder;
+        this.customerName = customerName;
+        this.customerAddress = customerAddress;
+        this.customerPhone = customerPhone;
     }
 
     public Integer getId() {
@@ -106,15 +113,43 @@ public class Order {
         this.paymentMethod = paymentMethod;
     }
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", orderNumber='" + orderNumber + '\'' +
-                ", dateOfOrder=" + dateOfOrder +
-                ", status=" + status +
-                ", totalAmount=" + totalAmount +
-                ", paymentMethod=" + paymentMethod +
-                '}';
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
+
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
+    }
+
+    public List<ProductOrder> getProductOrders() {
+        return productOrders;
+    }
+
+    public void setProductOrders(List<ProductOrder> productOrders) {
+        this.productOrders = productOrders;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getCustomerAddress() {
+        return customerAddress;
+    }
+
+    public void setCustomerAddress(String customerAddress) {
+        this.customerAddress = customerAddress;
+    }
+
+    public String getCustomerPhone() {
+        return customerPhone;
+    }
+
+    public void setCustomerPhone(String customerPhone) {
+        this.customerPhone = customerPhone;
     }
 }

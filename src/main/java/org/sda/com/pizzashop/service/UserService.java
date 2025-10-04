@@ -10,4 +10,8 @@ public interface UserService extends UserDetailsService {
     Optional<User> findByEmail(String email);
 
     void createUser(String email, String password, UserRole role, String name);
+
+    User registerUser(User user);
+
+    void save(User user);
 }

@@ -13,5 +13,8 @@ public interface ProductService {
     void delete(int id);
 
     Optional<Product> findById(int id);
+    List<Product> searchProducts(String query);
+    Product save(Product product);
+
 
 }

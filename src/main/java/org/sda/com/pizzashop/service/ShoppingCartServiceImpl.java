@@ -23,7 +23,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final OrderRepository orderRepository;
     private final MailService mailService;
 
-    public ShoppingCartServiceImpl(UserService userService, ProductOrderRepository productOrderRepository, OrderRepository orderRepository, MailService mailService) {
+    public ShoppingCartServiceImpl(UserService userService,
+                                   ProductOrderRepository productOrderRepository,
+                                   OrderRepository orderRepository,
+                                   MailService mailService) {
         this.userService = userService;
         this.productOrderRepository = productOrderRepository;
         this.orderRepository = orderRepository;
@@ -32,16 +35,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public void addProduct(Product product) {
-        if (cart.containsKey(product)) {
-            cart.put(product, cart.get(product) + 1);
-        } else {
-            cart.put(product, 1);
-        }
+        cart.merge(product, 1, Integer::sum);
     }
 
     @Override
     public void removeProduct(Product product) {
-
         if (cart.containsKey(product)) {
             if (cart.get(product) == 1) {
                 cart.remove(product);
@@ -58,35 +56,54 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public double totalPrice() {
-        double totalPrice = 0;
-        for (Map.Entry<Product, Integer> entry : cart.entrySet()) {
-            if (entry.getKey().getPromoPrice() == null) {
-                totalPrice += entry.getValue() * entry.getKey().getPrice();
-            } else {
-                totalPrice += entry.getValue() * entry.getKey().getPromoPrice();
-            }
-        }
-        return totalPrice;
+        return cart.entrySet().stream()
+                .mapToDouble(entry -> entry.getValue() *
+                        (entry.getKey().getPromoPrice() == null
+                                ? entry.getKey().getPrice()
+                                : entry.getKey().getPromoPrice()))
+                .sum();
     }
 
     @Override
     public void checkOut(String userEmail) {
+        checkOut(userEmail, null, null, null, null);
+    }
+
+    @Override
+    public void checkOut(String userEmail, String firstName, String lastName, String address, String phone) {
         User user = userService.findByEmail(userEmail)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
         UserProfile userProfile = user.getUserProfile();
         if (userProfile == null) {
-            throw new IllegalArgumentException("User profile does not exists");
+            userProfile = new UserProfile();
         }
 
+        if (firstName != null) userProfile.setFirsName(firstName);
+        if (lastName != null) userProfile.setLastName(lastName);
+        if (address != null) userProfile.setAddress(address);
+        if (phone != null) userProfile.setPhoneNumber(phone);
+
+
+        user.setUserProfile(userProfile);
+        userService.save(user);
         Order newOrder = new Order();
-        newOrder.setOrderNumber(ORDER_PREFIX + new Random().nextInt(1000000));
+        newOrder.setOrderNumber(ORDER_PREFIX + UUID.randomUUID().toString().substring(0, 8));
         newOrder.setDateOfOrder(new Date());
         newOrder.setStatus(OrderStatus.CREATED);
         newOrder.setTotalAmount(totalPrice());
         newOrder.setPaymentMethod(PaymentMethod.CREDIT_CARD);
         newOrder.setUserProfile(userProfile);
+        newOrder.setCustomerName(
+                (firstName != null ? firstName : userProfile.getFirsName()) + " " +
+                        (lastName != null ? lastName : userProfile.getLastName())
+        );
+        newOrder.setCustomerAddress(address != null ? address : userProfile.getAddress());
+        newOrder.setCustomerPhone(phone != null ? phone : userProfile.getPhoneNumber());
+
         orderRepository.save(newOrder);
 
+        // Salveaza produsele din coș
         for (Map.Entry<Product, Integer> entry : getAllProducts().entrySet()) {
             ProductOrder productOrder = new ProductOrder();
             productOrder.setOrder(newOrder);
@@ -94,16 +111,24 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             productOrder.setQuantity(entry.getValue());
             productOrderRepository.save(productOrder);
         }
+
         try {
             mailService.sendEmail(
                     "pizzashop@gmail.com",
                     userEmail,
-                    "New pizza order",
-                    "New pizza order with total amount :" +totalPrice()
+                    "Pizza Shop - Order Confirmation",
+                    "Thank you, " +
+                            Optional.ofNullable(firstName).orElse(userProfile.getFirsName()) + " " +
+                            Optional.ofNullable(lastName).orElse(userProfile.getLastName()) +
+                            "! Your order (" + newOrder.getOrderNumber() + ") has been placed.\n" +
+                            "Delivery Address: " + Optional.ofNullable(address).orElse(userProfile.getAddress()) +
+                            "\nPhone: " + Optional.ofNullable(phone).orElse(userProfile.getPhoneNumber()) +
+                            "\nTotal Amount: " + totalPrice() + " lei"
             );
         } catch (MessagingException e) {
             e.printStackTrace();
         }
+
         cart.clear();
     }
 
@@ -111,5 +136,4 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public Map<Product, Integer> getAllProducts() {
         return Collections.unmodifiableMap(cart);
     }
-
 }

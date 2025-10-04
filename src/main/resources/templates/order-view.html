@@ -1,80 +1,57 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments/header :: header-css"></head>
+<head th:replace="~{fragments/header :: header-css}"></head>
 
 <body>
-<div th:replace="fragments/header :: header"></div>
+<div th:replace="~{fragments/header :: header}"></div>
 
-<section class="h-100 gradient-custom">
-    <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-lg-10 col-xl-8">
-                <div class="card" style="border-radius: 10px;">
-                    <div sec:authorize="hasAuthority('CLIENT')" class="card-header px-4 py-5">
-                        <h5 class="text-muted mb-0">Thanks for your Order, <span style="color: #0e0e0e;" th:text="${userProfile.getFirsName()} + ' '+${userProfile.getLastName()} "></span>!</h5>
-                    </div>
-                    <div class="card-body p-4">
-                        <div class="d-flex justify-content-between align-items-center mb-4">
-                            <p class="lead fw-normal mb-0" style="color: #0e0e0e;">Receipt</p>
-                            <p class="small text-muted mb-0" th:text="'Receipt Voucher : '+ ${order.getOrderNumber()}"></p>
-                        </div>
-                        <div th:each="productOrder : ${order.getProductOrders()}" class="card shadow-0 border mb-4">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <img th:src="${productOrder.getProduct().getMainImageUrl()}"
-                                             class="img-fluid">
-                                    </div>
-                                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                        <p th:text="${productOrder.getProduct().getName()}" class="text-muted mb-0"></p>
-                                    </div>
-                                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                        <p th:text="'Qty: '+ ${productOrder.getQuantity()}" class="text-muted mb-0 small"></p>
-                                    </div>
-                                    <div th:if="${productOrder.getProduct().getPromoPrice() == null}" class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                        <p th:text="${productOrder.getProduct().getPrice()} + ' Lei'" class="text-muted mb-0 small"></p>
-                                    </div>
-                                    <div th:if="${productOrder.getProduct().getPromoPrice() != null}" class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                        <p th:text="${productOrder.getProduct().getPromoPrice()} + ' Lei'" class="text-muted mb-0 small"></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-between pt-2">
-                            <p class="fw-bold mb-0">Order Details</p>
-                            <p class="text-muted mb-0" ><span class="fw-bold me-4">Total</span ><span th:text=" ${order.getTotalAmount()}+ ' Lei'" ></span></p>
-                        </div>
-
-                        <div class="d-flex justify-content-between pt-2">
-                            <p class="text-muted mb-0" th:text="'Order Number :'+ ${order.getOrderNumber()}"></p>
-                            <p class="text-muted mb-0"><span class="fw-bold me-4"></span> </p>
-                        </div>
-
-                        <div class="d-flex justify-content-between">
-                            <p class="text-muted mb-0" th:text="'Order Date : '+ ${order.getDateOfOrder()}"></p>
-                            <p class="text-muted mb-0"><span class="fw-bold me-4"></span> </p>
-                        </div>
-
-                        <div class="d-flex justify-content-between mb-5">
-                            <p class="text-muted mb-0"></p>
-                            <p class="text-muted mb-0"><span class="fw-bold me-4">Delivery Charges</span> Free</p>
-                        </div>
-                    </div>
-                    <div class="card-footer border-0 px-4 py-5"
-                         style="background-color: #212020; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
-                        <h5 class="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">Total
-                            paid: <span class="h2 mb-0 ms-2" th:text="${order.getTotalAmount()} +' Lei'"></span></h5>
-                    </div>
-                </div>
+<main role="main">
+    <div class="container py-5">
+        <h2 class="mb-4">Order Details</h2>
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <p><strong>Order Number:</strong> <span th:text="${order.orderNumber}"></span></p>
+                <p><strong>Date:</strong> <span th:text="${#dates.format(order.dateOfOrder,'dd/MM/yyyy HH:mm')}"></span></p>
+                <p><strong>Status:</strong> <span th:text="${order.status}"></span></p>
+                <p><strong>Total Amount:</strong> <span th:text="${order.totalAmount} + ' Lei'"></span></p>
             </div>
         </div>
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                <h5 class="mb-0">Delivery Details</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Name:</strong> <span th:text="${order.customerName}"></span></p>
+                <p><strong>Address:</strong> <span th:text="${order.customerAddress}"></span></p>
+                <p><strong>Phone:</strong> <span th:text="${order.customerPhone}"></span></p>
+            </div>
+        </div>
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h5 class="mb-0">Products</h5>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="po : ${order.productOrders}">
+                        <td th:text="${po.product.name}"></td>
+                        <td th:text="${po.quantity}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
-</section>
+</main>
 
-
-
-<div th:replace="fragments/footer :: footer"></div>
+<div th:replace="~{fragments/footer :: footer}"></div>
 </body>
-
 </html>

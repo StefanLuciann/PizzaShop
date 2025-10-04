@@ -1,63 +1,65 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments/header :: header-css"></head>
+<head th:replace="~{fragments/header :: header-css}"></head>
 
 <body>
-<div th:replace="fragments/header :: header"></div>
-<div class="container">
-    <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            <h1>Update order</h1>
+<div th:replace="~{fragments/header :: header}"></div>
+<main role="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h1 class="mb-4 text-center">Update Order</h1>
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <p class="fw-bold mb-0">Order Number:</p>
+                            <p class="text-muted mb-0" th:text="${order.orderNumber}"></p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <p class="fw-bold mb-0">Order Date:</p>
+                            <p class="text-muted mb-0" th:text="${#dates.format(order.dateOfOrder,'dd/MM/yyyy HH:mm')}"></p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <p class="fw-bold mb-0">Total:</p>
+                            <p class="text-muted mb-0" th:text="${order.totalAmount} + ' Lei'"></p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <p class="fw-bold mb-0">Delivery Charges:</p>
+                            <p class="text-muted mb-0">Free</p>
+                        </div>
+                    </div>
+                </div>
 
-        </div>
-        <div class="d-flex justify-content-between pt-2">
-            <p class="fw-bold mb-0">Order Details</p>
-            <p class="text-muted mb-0"><span class="fw-bold me-4">Total</span><span
-                    th:text=" ${order.getTotalAmount()}+ ' Lei'"></span></p>
-        </div>
+                <form th:action="@{/admin-order-update/{id}(id=${order.id})}" th:object="${order}" method="post" class="card shadow-sm p-4">
+                    <div class="form-group mb-3">
+                        <label for="customerName" class="form-label">Customer Name</label>
+                        <input type="text" id="customerName" th:field="*{customerName}" class="form-control" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="customerAddress" class="form-label">Customer Address</label>
+                        <input type="text" id="customerAddress" th:field="*{customerAddress}" class="form-control" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="customerPhone" class="form-label">Customer Phone</label>
+                        <input type="text" id="customerPhone" th:field="*{customerPhone}" class="form-control" required>
+                    </div>
 
-        <div class="d-flex justify-content-between pt-2">
-            <p class="text-muted mb-0" th:text="'Order Number :'+ ${order.getOrderNumber()}"></p>
-            <p class="text-muted mb-0"><span class="fw-bold me-4"></span></p>
-        </div>
-
-        <div class="d-flex justify-content-between">
-            <p class="text-muted mb-0" th:text="'Order Date : '+ ${order.getDateOfOrder()}"></p>
-            <p class="text-muted mb-0"><span class="fw-bold me-4"></span></p>
-        </div>
-
-        <div class="d-flex justify-content-between mb-5">
-            <p class="text-muted mb-0"></p>
-            <p class="text-muted mb-0"><span class="fw-bold me-4">Delivery Charges</span> Free</p>
-        </div>
-
-        <form th:action="@{/admin-order-update/{id}(id=${order.getId()})}" th:object="${order}" method="post">
-
-
-            <div class="form-group" th:classappend="${#fields.hasErrors('status')}? 'has-error':''">
-                <label for="status" class="control-label">Status</label>
-                <select class="form-control input-lg" name="status" autofocus="true" id="status"
-                        th:field="*{status}">
-                    <option th:each="opt:${T(org.sda.com.pizzashop.model.enums.OrderStatus).values()}"
-                            th:text="${opt.name()}" th:value="${opt.name()}">
-                    </option>
-                </select>
+                    <div class="form-group mb-4">
+                        <label for="status" class="form-label">Status</label>
+                        <select id="status" th:field="*{status}" class="form-select">
+                            <option th:each="opt : ${T(org.sda.com.pizzashop.model.enums.OrderStatus).values()}"
+                                    th:value="${opt}" th:text="${opt}"></option>
+                        </select>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success px-5">Update Order</button>
+                    </div>
+                </form>
             </div>
-
-
-            <div class="form-group">
-                <button type="submit" class="btn btn-success">Update</button>
-
-            </div>
-
-        </form>
+        </div>
     </div>
-</div>
-</div>
-
-
-<div th:replace="fragments/footer :: footer"></div>
+</main>
+<div th:replace="~{fragments/footer :: footer}"></div>
 </body>
-
 </html>

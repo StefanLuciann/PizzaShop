@@ -11,13 +11,16 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
+
     @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http.authorizeHttpRequests()
+        return http
+                .authorizeHttpRequests()
                 .requestMatchers(
                         "/javax",
                         "/css/**",
@@ -27,18 +30,28 @@ public class SecurityConfiguration {
                         "/vendor/**",
                         "/webjars/**",
                         "/*/webjars/**",
-                        "/client-register/**",
                         "/",
                         "/index",
                         "/home",
+                        "/about",
+                        "/contact",
+                        "/search",
+                        "/send-message",
                         "/shopping-cart-add/**",
                         "/shopping-cart-remove/**",
-                        "/shopping-cart/**"
+                        "/shopping-cart/**",
+                        "/client-register/**",
+                        "/login"
                 ).permitAll()
-                .requestMatchers("/admin-register","/add-product","/update-product","/all-orders","/delete-product")
-                .hasAuthority("ADMIN")
-                .anyRequest()
-                .authenticated()
+                .requestMatchers(
+                        "/admin-register/**",
+                        "/add-product/**",
+                        "/update-product/**",
+                        "/all-orders/**",
+                        "/delete-product/**",
+                        "/admin/messages/**"
+                ).hasAuthority("ADMIN")
+                .anyRequest().authenticated()
                 .and()
                 .httpBasic()
                 .and()
@@ -50,9 +63,9 @@ public class SecurityConfiguration {
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login?logout").permitAll()
+                .logoutSuccessUrl("/login?logout")
+                .permitAll()
                 .and()
                 .build();
     }
-
 }

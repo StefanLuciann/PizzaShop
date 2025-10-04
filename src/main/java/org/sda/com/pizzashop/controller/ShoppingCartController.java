@@ -4,11 +4,8 @@ import org.sda.com.pizzashop.model.Product;
 import org.sda.com.pizzashop.service.ProductService;
 import org.sda.com.pizzashop.service.ShoppingCartService;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -26,11 +23,8 @@ public class ShoppingCartController {
 
     @GetMapping("/shopping-cart-add/{id}")
     public String addProductToShoppingCart(@PathVariable("id") int id, @RequestParam String origin) {
-        Optional<Product> productOptional = productService.findById(id);
-        if (productOptional.isPresent()) {
-            shoppingCartService.addProduct(productOptional.get());
-        }
-        if (origin != null && origin.equals("shopping-cart")) {
+        productService.findById(id).ifPresent(shoppingCartService::addProduct);
+        if ("shopping-cart".equals(origin)) {
             return "redirect:/shopping-cart";
         }
         return "redirect:/home?productAddedToCart";
@@ -38,10 +32,7 @@ public class ShoppingCartController {
 
     @GetMapping("/shopping-cart-remove/{id}")
     public String removeProductFromShoppingCart(@PathVariable("id") int id) {
-        Optional<Product> productOptional = productService.findById(id);
-        if (productOptional.isPresent()) {
-            shoppingCartService.removeProduct(productOptional.get());
-        }
+        productService.findById(id).ifPresent(shoppingCartService::removeProduct);
         return "redirect:/shopping-cart";
     }
 
@@ -53,10 +44,15 @@ public class ShoppingCartController {
         model.addAttribute("deliveryEnd", LocalDateTime.now().plusHours(2));
         return "shopping-cart";
     }
-    @GetMapping("/cart-checkout")
-    public String checkOutCart(Principal principal){
-        shoppingCartService.checkOut(principal.getName());
-        return "redirect:/home";
+
+    @PostMapping("/cart-checkout")
+    public String checkOutCart(@RequestParam String firstName,
+                               @RequestParam String lastName,
+                               @RequestParam String address,
+                               @RequestParam String phone,
+                               Principal principal) {
+        shoppingCartService.checkOut(principal.getName(), firstName, lastName, address, phone);
+        return "redirect:/home?orderPlaced";
     }
 
 }

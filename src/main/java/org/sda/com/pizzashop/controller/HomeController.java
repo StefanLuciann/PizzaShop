@@ -18,4 +18,14 @@ public class HomeController {
         model.addAttribute("products",productService.getAllProducts());
         return "index";
     }
+
+    @GetMapping("/about")
+    public String about() {
+        return "about";
+    }
+
+    @GetMapping("/contact")
+    public String contact() {
+        return "contact";
+    }
 }

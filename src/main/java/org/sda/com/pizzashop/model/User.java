@@ -1,33 +1,36 @@
 package org.sda.com.pizzashop.model;
 
-import org.sda.com.pizzashop.model.enums.UserRole;
-
 import jakarta.persistence.*;
+import org.sda.com.pizzashop.model.enums.UserRole;
 
 @Entity
 @Table(name = "user")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
-    @Column(name = "email")
+
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
-    @Column(name = "password")
+
+    @Column(name = "password", nullable = false)
     private String password;
-    @Column(name = "role")
+
     @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
     private UserRole userRole;
-    @OneToOne
-    @JoinColumn(name = "user_profile_id")
+
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "user_profile_id", referencedColumnName = "id")
     private UserProfile userProfile;
 
-
-    public User() {
-    }
+    public User() {}
 
     public User(String name, String email, String password, UserRole userRole) {
         this.name = name;
@@ -35,6 +38,7 @@ public class User {
         this.password = password;
         this.userRole = userRole;
     }
+
 
     public Integer getId() {
         return id;
@@ -82,16 +86,5 @@ public class User {
 
     public void setUserProfile(UserProfile userProfile) {
         this.userProfile = userProfile;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", userRole=" + userRole +
-                '}';
     }
 }

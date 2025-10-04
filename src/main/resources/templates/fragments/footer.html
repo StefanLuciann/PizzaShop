@@ -4,34 +4,87 @@
 <head>
 </head>
 <style>
-    .footer{
-        position: fixed;
-        left: 0;
-        bottom: 0;
+    .footer {
+        background-color: #212529;
+        color: #f8f9fa;
+        padding: 30px 0;
+        margin-top: 50px;
+    }
+    .footer a {
+        color: #f8f9fa;
+        text-decoration: none;
+    }
+    .footer a:hover {
+        text-decoration: underline;
+    }
+    .footer h6 {
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+    .map-container {
+        position: relative;
+        overflow: hidden;
+        border-radius: 10px;
+        height: 200px;
+    }
+    .map-container iframe {
+        border: 0;
         width: 100%;
-        text-align: center;
+        height: 100%;
     }
 </style>
 
-
 <body>
-<div class="footer">
-
-<div th:fragment="footer">
+<div th:fragment="footer" class="footer">
     <div class="container">
-        <footer>
-            <span>copyright</span>
-            <span>
-                    <a th:href="@{/about}">About</a>
-                </span>
-        </footer>
+        <div class="row text-center text-md-left">
+
+            <div class="col-md-3 mb-3">
+                <h6 class="text-uppercase">It's me. Mario!</h6>
+                <p>Best pizza in town, made with fresh ingredients every day!</p>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <h6 class="text-uppercase">Contact</h6>
+                <p><i class="fas fa-map-marker-alt"></i> Str. Unirii 45, Craiova, România</p>
+                <p><i class="fas fa-envelope"></i>
+                    <a href="mailto:contact@pizzashop.ro">contact@pizzashop.ro</a>
+                </p>
+                <p><i class="fas fa-phone"></i> +40 741 123 456</p>
+            </div>
+
+
+            <div class="col-md-3 mb-3">
+                <h6 class="text-uppercase">Linkuri utile</h6>
+                <ul class="list-unstyled">
+                    <li><a th:href="@{/about}">About</a></li>
+                    <li><a th:href="@{/contact}">Contact</a></li>
+                    <li><a th:href="@{/terms}">Terms & Conditions</a></li>
+                    <li><a th:href="@{/privacy}">Privacy Policy</a></li>
+                </ul>
+            </div>
+
+
+            <div class="col-md-3 mb-3">
+                <h6 class="text-uppercase">Ne găsești aici</h6>
+                <div class="map-container">
+                    <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2849.415197355996!2d23.7948809766792!3d44.33017801086851!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x474d3f83d92e8cf7%3A0x2a6d2f2cda0a07bb!2sUniversitatea%20din%20Craiova!5e0!3m2!1sro!2sro!4v1691234567890!5m2!1sro!2sro"
+                            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+
+        <hr style="background: #444;">
+
+        <div class="text-center mt-3">
+            <span>&copy; 2025 PizzaShop. All rights reserved.</span>
+        </div>
     </div>
-    <script type="text/javascript" th:src="@{webjars/jquery/3.3.1-1/jquery.min.js}"></script>
-    <script type="text/javascript" th:src="@{webjars/bootstrap/4.1.0/js/bootstrap.min.js}"></script>
-    <script type="text/javascript" th:src="@{/js/lang.js}"></script>
-</div>
+
+
+
 </div>
 </body>
-
-
 </html>

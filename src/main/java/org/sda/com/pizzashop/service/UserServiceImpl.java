@@ -17,11 +17,12 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
     private final UserProfileRepository userProfileRepository;
-
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserProfileRepository userProfileRepository, UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserProfileRepository userProfileRepository,
+                           UserRepository userRepository,
+                           BCryptPasswordEncoder passwordEncoder) {
         this.userProfileRepository = userProfileRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -41,11 +42,30 @@ public class UserServiceImpl implements UserService {
                 role
         );
 
-        if(role.equals(UserRole.CLIENT)){
+        if (role.equals(UserRole.CLIENT)) {
             UserProfile userProfile = new UserProfile();
             userProfileRepository.save(userProfile);
             user.setUserProfile(userProfile);
         }
+
+        userRepository.save(user);
+    }
+
+    @Override
+    public User registerUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        if (user.getUserRole().equals(UserRole.CLIENT) && user.getUserProfile() == null) {
+            UserProfile userProfile = new UserProfile();
+            userProfileRepository.save(userProfile);
+            user.setUserProfile(userProfile);
+        }
+
+        return userRepository.save(user);
+    }
+
+    @Override
+    public void save(User user) {
         userRepository.save(user);
     }
 
@@ -55,6 +75,7 @@ public class UserServiceImpl implements UserService {
         if (userOptional.isEmpty()) {
             throw new UsernameNotFoundException("Wrong username or password");
         }
+
         User user = userOptional.get();
         return new org.springframework.security.core.userdetails.User(
                 email,
